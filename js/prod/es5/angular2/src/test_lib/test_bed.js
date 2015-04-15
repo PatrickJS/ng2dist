@@ -1,0 +1,150 @@
+System.register(["angular2/di", "angular2/src/facade/lang", "angular2/src/facade/async", "angular2/src/facade/collection", "angular2/src/core/annotations/view", "angular2/src/core/compiler/template_resolver", "angular2/src/core/compiler/compiler", "angular2/src/core/compiler/view", "angular2/src/core/compiler/view_factory", "angular2/src/core/compiler/element_injector", "angular2/src/core/compiler/directive_metadata_reader", "./utils", "./lang_utils"], function($__export) {
+  "use strict";
+  var Injector,
+      bind,
+      Type,
+      isPresent,
+      BaseException,
+      Promise,
+      isBlank,
+      List,
+      View,
+      TemplateResolver,
+      Compiler,
+      AppView,
+      ViewFactory,
+      DirectiveBinding,
+      DirectiveMetadataReader,
+      queryView,
+      viewRootNodes,
+      el,
+      instantiateType,
+      getTypeOf,
+      TestBed,
+      ViewProxy;
+  return {
+    setters: [function($__m) {
+      Injector = $__m.Injector;
+      bind = $__m.bind;
+    }, function($__m) {
+      Type = $__m.Type;
+      isPresent = $__m.isPresent;
+      BaseException = $__m.BaseException;
+      isBlank = $__m.isBlank;
+    }, function($__m) {
+      Promise = $__m.Promise;
+    }, function($__m) {
+      List = $__m.List;
+    }, function($__m) {
+      View = $__m.View;
+    }, function($__m) {
+      TemplateResolver = $__m.TemplateResolver;
+    }, function($__m) {
+      Compiler = $__m.Compiler;
+    }, function($__m) {
+      AppView = $__m.AppView;
+    }, function($__m) {
+      ViewFactory = $__m.ViewFactory;
+    }, function($__m) {
+      DirectiveBinding = $__m.DirectiveBinding;
+    }, function($__m) {
+      DirectiveMetadataReader = $__m.DirectiveMetadataReader;
+    }, function($__m) {
+      queryView = $__m.queryView;
+      viewRootNodes = $__m.viewRootNodes;
+      el = $__m.el;
+    }, function($__m) {
+      instantiateType = $__m.instantiateType;
+      getTypeOf = $__m.getTypeOf;
+    }],
+    execute: function() {
+      TestBed = $__export("TestBed", (function() {
+        var TestBed = function TestBed(injector) {
+          this._injector = injector;
+        };
+        return ($traceurRuntime.createClass)(TestBed, {
+          overrideView: function(component, template) {
+            this._injector.get(TemplateResolver).setView(component, template);
+          },
+          setInlineTemplate: function(component, html) {
+            this._injector.get(TemplateResolver).setInlineTemplate(component, html);
+          },
+          overrideDirective: function(component, from, to) {
+            this._injector.get(TemplateResolver).overrideTemplateDirective(component, from, to);
+          },
+          createView: function(component) {
+            var $__3,
+                $__4;
+            var $__2 = arguments[1] !== (void 0) ? arguments[1] : {},
+                context = ($__3 = $__2.context) === void 0 ? null : $__3,
+                html = ($__4 = $__2.html) === void 0 ? null : $__4;
+            var $__0 = this;
+            if (isBlank(component) && isBlank(context)) {
+              throw new BaseException('You must specified at least a component or a context');
+            }
+            if (isBlank(component)) {
+              component = getTypeOf(context);
+            } else if (isBlank(context)) {
+              context = instantiateType(component);
+            }
+            if (isPresent(html)) {
+              this.setInlineTemplate(component, html);
+            }
+            var rootEl = el('<div></div>');
+            var metadataReader = this._injector.get(DirectiveMetadataReader);
+            var componentBinding = DirectiveBinding.createFromBinding(bind(component).toValue(context), metadataReader.read(component).annotation);
+            return this._injector.get(Compiler).compileRoot(rootEl, componentBinding).then((function(pv) {
+              var viewFactory = $__0._injector.get(ViewFactory);
+              var view = viewFactory.getView(pv);
+              view.hydrate($__0._injector, null, context, null);
+              return new ViewProxy(view.componentChildViews[0]);
+            }));
+          }
+        }, {});
+      }()));
+      Object.defineProperty(TestBed, "parameters", {get: function() {
+          return [[Injector]];
+        }});
+      Object.defineProperty(TestBed.prototype.overrideView, "parameters", {get: function() {
+          return [[Type], [View]];
+        }});
+      Object.defineProperty(TestBed.prototype.setInlineTemplate, "parameters", {get: function() {
+          return [[Type], [assert.type.string]];
+        }});
+      Object.defineProperty(TestBed.prototype.overrideDirective, "parameters", {get: function() {
+          return [[Type], [Type], [Type]];
+        }});
+      Object.defineProperty(TestBed.prototype.createView, "parameters", {get: function() {
+          return [[Type], []];
+        }});
+      ViewProxy = $__export("ViewProxy", (function() {
+        var ViewProxy = function ViewProxy(view) {
+          this._view = view;
+        };
+        return ($traceurRuntime.createClass)(ViewProxy, {
+          get context() {
+            return this._view.context;
+          },
+          get rootNodes() {
+            return viewRootNodes(this._view);
+          },
+          detectChanges: function() {
+            this._view.changeDetector.detectChanges();
+          },
+          querySelector: function(selector) {
+            return queryView(this._view, selector);
+          },
+          get rawView() {
+            return this._view;
+          }
+        }, {});
+      }()));
+      Object.defineProperty(ViewProxy, "parameters", {get: function() {
+          return [[AppView]];
+        }});
+    }
+  };
+});
+//# sourceMappingURL=test_bed.es6.map
+
+//# sourceMappingURL=./test_bed.js.map

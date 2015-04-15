@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.cjs"],"names":[],"mappings":"AAAA;AAAA,MAAM,AAAC,CAAC,OAAM,AAAC,CAAC,SAAQ,CAAC,aAAa,CAAC,CAAC;AACxC,KAAK,QAAQ,EAAI,CAAA,OAAM,AAAC,CAAC,iBAAgB,CAAC,CAAC;AAC3C","file":"benchpress/index.js","sourcesContent":["require(require('traceur').RUNTIME_PATH);\nmodule.exports = require('./benchpress.js');\n"]}
