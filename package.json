@@ -1,0 +1,19 @@
+{
+  "name": "ng2dist",
+  "version": "1.0.0",
+  "description": "",
+  "main": "angular2.dev.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gdi2290/ng2dist.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gdi2290/ng2dist/issues"
+  },
+  "homepage": "https://github.com/gdi2290/ng2dist"
+}
