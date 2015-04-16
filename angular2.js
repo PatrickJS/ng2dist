@@ -17591,6 +17591,9 @@ System.register("angular2/src/change_detection/change_detection", ["angular2/src
           },
           transform: function(value) {
             var $__0 = this;
+            if (value === null) {
+              return NO_CHANGE;
+            }
             if (!this.subscription) {
               this.observable = value;
               this.subscription = value.subscribe((function(x) {
@@ -17613,7 +17616,7 @@ System.register("angular2/src/change_detection/change_detection", ["angular2/src
         "keyValDiff": [new KeyValueChangesFactory(), new NullPipeFactory()],
         "async": [{
           supports: (function(obj) {
-            return obj && obj.subscribe !== undefined;
+            return obj.subscribe !== undefined;
           }),
           create: (function() {
             return new AsyncPipe();
