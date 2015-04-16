@@ -19,7 +19,11 @@ class AsyncPipe extends Pipe {
     return this.observable === obj;
   }
   onDestroy() {
-    this.subscription.dispose();
+    if (this.subscription && this.subscription.dispose) {
+      this.subscription.dispose();
+    } else if (this.dispose) {
+      this.dispose();
+    }
   }
   transform(value) {
     if (!this.subscription) {
@@ -42,7 +46,7 @@ export var defaultPipes = {
   "iterableDiff": [new IterableChangesFactory(), new NullPipeFactory()],
   "keyValDiff": [new KeyValueChangesFactory(), new NullPipeFactory()],
   "async": [{
-    supports: (obj) => obj.subscribe !== undefined,
+    supports: (obj) => obj && obj.subscribe !== undefined,
     create: () => new AsyncPipe()
   }]
 };

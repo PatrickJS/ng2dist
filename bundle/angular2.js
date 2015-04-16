@@ -18260,7 +18260,11 @@ System.register("angular2/src/change_detection/change_detection", ["angular2/src
             return this.observable === obj;
           },
           onDestroy: function() {
-            this.subscription.dispose();
+            if (this.subscription && this.subscription.dispose) {
+              this.subscription.dispose();
+            } else if (this.dispose) {
+              this.dispose();
+            }
           },
           transform: function(value) {
             var $__0 = this;
@@ -18286,7 +18290,7 @@ System.register("angular2/src/change_detection/change_detection", ["angular2/src
         "keyValDiff": [new KeyValueChangesFactory(), new NullPipeFactory()],
         "async": [{
           supports: (function(obj) {
-            return obj.subscribe !== undefined;
+            return obj && obj.subscribe !== undefined;
           }),
           create: (function() {
             return new AsyncPipe();
